@@ -39,3 +39,21 @@ class EnergyReadingResponse(EnergyReadingBase):
     class Config:
         orm_mode = True
 
+
+# --- Trading ---
+class TradeBase(BaseModel):
+    seller_id: int
+    buyer_id: int
+    energy_kwh: float
+    price: float
+
+class TradeCreate(TradeBase):
+    pass
+
+class TradeResponse(TradeBase):
+    id: int
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
+

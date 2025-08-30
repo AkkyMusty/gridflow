@@ -54,3 +54,18 @@ class TradingSession(Base):
     profit = Column(Float, nullable=True)
 
     user = relationship("User", back_populates="trading_sessions")
+
+
+
+class Trade(Base):
+    __tablename__ = "trades"
+
+    id = Column(Integer, primary_key=True, index=True)
+    seller_id = Column(Integer, ForeignKey("users.id"))
+    buyer_id = Column(Integer, ForeignKey("users.id"))
+    energy_kwh = Column(Float, nullable=False)
+    price = Column(Float, nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+
+    seller = relationship("User", foreign_keys=[seller_id], backref="sales")
+    buyer = relationship("User", foreign_keys=[buyer_id], backref="purchases")
