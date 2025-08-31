@@ -2,20 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 from gridflow import models, schemas, database
+from gridflow.database import get_db
 
-router = APIRouter(
-    prefix="/users",
-    tags=["users"],
-)
-
-
-# Dependency
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+router = APIRouter()
 
 
 @router.post("/", response_model=schemas.UserResponse)
