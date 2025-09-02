@@ -60,3 +60,19 @@ def test_delete_user():
     # Verify user no longer exists
     response = client.get(f"/users/{user_id}")
     assert response.status_code == 404
+
+def test_get_user():
+    # Create a user first
+    response = client.post(
+        "/users/",
+        json={"name": "Diana", "email": "diana@example.com", "password": "test999"}
+    )
+    assert response.status_code == 200
+    user_id = response.json()["id"]
+
+    # Retrieve that user
+    response = client.get(f"/users/{user_id}")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == user_id
+    assert data["email"] == "diana@example.com"
